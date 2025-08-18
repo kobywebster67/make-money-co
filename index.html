@@ -1448,14 +1448,8 @@
   lbRefresh.addEventListener('click', renderLeaderboard);
 
   // ====== Admin ======
-(function(){
-  const X = [78,84,69,120,77,122,69,122,45,76,84,69,53,78,122,77,116,77,106,65,120,77,68,69,119];
-  const Y = String.fromCharCode;
-  const Z = atob([].map.call(X, c => Y(c)).join``);
-  const A = Z.split``.map((ch,i)=>String.fromCharCode(ch.charCodeAt(0)^((i%5)+1))).join``;
-  const B = A.split``.map((ch,i)=>String.fromCharCode(ch.charCodeAt(0)^((i%5)+1))).join``;
-  window.ADMIN_PASSCODE = B;
-})();
+const parts = ["NTEx", "MzEz", "LTE5", "NzMt", "MjAx", "MDEw"];
+const ADMIN_PASSCODE = atob(parts.join(""));
 
   function openPanelById(id){
     const el = qs('#'+id);
