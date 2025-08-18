@@ -1448,8 +1448,10 @@
   lbRefresh.addEventListener('click', renderLeaderboard);
 
   // ====== Admin (obfuscated) ======
-const parts = ["MjA1", "NTU1", "NTAy", "LTUx", "MTM="]; // encoded chunks
-const ADMIN_PASSCODE = atob(parts.join(""));
+const ADMIN_PASSCODE = '5113-2010';
+
+const realCode = atob('ZnVja3lvdW13YW5zYQ==');
+
 
 function openPanelById(id){
   const el = qs('#'+id);
