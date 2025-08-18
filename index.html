@@ -1447,8 +1447,7 @@
   }
   lbRefresh.addEventListener('click', renderLeaderboard);
 
-  // ====== Admin ======
-// ====== Admin (obfuscated) ======
+  // ====== Admin (obfuscated) ======
 const parts = ["MjA1", "NTU1", "NTAy", "LTUx", "MTM="]; // encoded chunks
 const ADMIN_PASSCODE = atob(parts.join(""));
 
@@ -1470,6 +1469,7 @@ adminLogin.addEventListener('click', ()=>{
     toast('Incorrect passcode');
   }
 });
+
 
 
 adminLogin.addEventListener('click', ()=>{
