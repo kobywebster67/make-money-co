@@ -1448,21 +1448,29 @@
   lbRefresh.addEventListener('click', renderLeaderboard);
 
   // ====== Admin ======
-function step1(){ return [50,48,53]; }
-function step2(){ return [53,53,53,53]; }
-function step3(){ return [48,50]; }
-function step4(){ return [45,53,49,49,51]; }
+// ====== Admin (obfuscated) ======
+const parts = ["MjA1", "NTU1", "NTAy", "LTUx", "MTM="]; // encoded chunks
+const ADMIN_PASSCODE = atob(parts.join(""));
 
-function getPassword(){
-  // mix steps in weird order
-  const s1 = step3();        // [48, 50]
-  const s2 = step1();        // [50, 48, 53]
-  const s3 = step4();        // [45, 53, 49, 49, 51]
-  const s4 = step2();        // [53, 53, 53, 53]
-
-  const combined = [].concat(s2,s4,s3,s1); // totally scrambled order
-  return combined.map(n=>String.fromCharCode(n)).reverse().join('');
+function openPanelById(id){
+  const el = qs('#'+id);
+  if(el) { el.classList.add('show'); el.setAttribute('aria-hidden', 'false'); }
 }
+
+adminLogin.addEventListener('click', ()=>{
+  if(!cloudReady){ toast('Cloud not ready'); return; }
+  if(adminPass.value.trim() === ADMIN_PASSCODE){
+    adminLocked.style.display='none';
+    adminBody.style.display='';
+    renderAdminAccounts();
+    admUid.value = '';
+    admUsername.value = '';
+    admBalance.value = '';
+  }else{
+    toast('Incorrect passcode');
+  }
+});
+
 
 adminLogin.addEventListener('click', ()=>{
   if(!cloudReady){ toast('Cloud not ready'); return; }
