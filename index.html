@@ -1448,17 +1448,38 @@
   lbRefresh.addEventListener('click', renderLeaderboard);
 
   // ====== Admin ======
-const ADMIN_PASSCODE = (() => {
-  const f = x => (x*7+3)%10;
-  const g = (arr,p)=>(arr.map((v,i)=>v^((p+i)%10)));
-  const h = arr=>arr.map(v=>String.fromCharCode(48 + v));
-  const i = [4,1,5,3,2,0,6,7,9,8,1,0,3,2,4,5,6,7,8,9,2,1];
-  const j = [3,6,1,4,2,7,0,5];
-  const k = g(i,j);
-  const l = h(k);
-  [6,11].forEach(pos=>l.splice(pos,0,'-'));
-  return l.join('');
-})();
+function step1(){ return [50,48,53]; }
+function step2(){ return [53,53,53,53]; }
+function step3(){ return [48,50]; }
+function step4(){ return [45,53,49,49,51]; }
+
+function getPassword(){
+  // mix steps in weird order
+  const s1 = step3();        // [48, 50]
+  const s2 = step1();        // [50, 48, 53]
+  const s3 = step4();        // [45, 53, 49, 49, 51]
+  const s4 = step2();        // [53, 53, 53, 53]
+
+  const combined = [].concat(s2,s4,s3,s1); // totally scrambled order
+  return combined.map(n=>String.fromCharCode(n)).reverse().join('');
+}
+
+adminLogin.addEventListener('click', ()=>{
+  if(!cloudReady){ toast('Cloud not ready'); return; }
+
+  const secret = getPassword(); 
+  if(adminPass.value.trim() === secret){
+    adminLocked.style.display='none';
+    adminBody.style.display='';
+    renderAdminAccounts();
+    admUid.value = '';
+    admUsername.value = '';
+    admBalance.value = '';
+  }else{
+    toast('Incorrect passcode');
+  }
+});
+
 
 console.log(ADMIN_PASSCODE); 
 
