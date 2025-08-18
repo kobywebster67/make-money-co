@@ -1471,23 +1471,6 @@ adminLogin.addEventListener('click', ()=>{
 
 
 
-adminLogin.addEventListener('click', ()=>{
-  if(!cloudReady){ toast('Cloud not ready'); return; }
-
-  const secret = getPassword(); 
-  if(adminPass.value.trim() === secret){
-    adminLocked.style.display='none';
-    adminBody.style.display='';
-    renderAdminAccounts();
-    admUid.value = '';
-    admUsername.value = '';
-    admBalance.value = '';
-  }else{
-    toast('Incorrect passcode');
-  }
-});
-
-
 console.log(ADMIN_PASSCODE); 
 
   function openPanelById(id){
