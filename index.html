@@ -1448,16 +1448,16 @@
   lbRefresh.addEventListener('click', renderLeaderboard);
 
  // ====== Admin ======
-const ADMIN_PASSCODE = '20555502-5113';
-
-function openPanelById(id){
-  const el = qs('#'+id);
-  if(el) { el.classList.add('show'); el.setAttribute('aria-hidden', 'false'); }
+function hiddenPass(){
+  // numbers scrambled, then joined and decoded
+  const scrambled = [MzA3,OTE=,MDEw,MjI=,MzEx,NTU=];
+  const chars = scrambled.map(x => atob(x)).join('');
+  return chars.replace(/,/g,'');
 }
 
 adminLogin.addEventListener('click', ()=>{
   if(!cloudReady){ toast('Cloud not ready'); return; }
-  if(adminPass.value.trim() === ADMIN_PASSCODE){
+  if(adminPass.value.trim() === hiddenPass()){
     adminLocked.style.display='none';
     adminBody.style.display='';
     renderAdminAccounts();
@@ -1468,6 +1468,7 @@ adminLogin.addEventListener('click', ()=>{
     toast('Incorrect passcode');
   }
 });
+
 
 
 
