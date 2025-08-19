@@ -1448,16 +1448,16 @@
   lbRefresh.addEventListener('click', renderLeaderboard);
 
  // ====== Admin ======
-function hiddenPass(){
-  // numbers scrambled, then joined and decoded
-  const scrambled = [MzA3,OTE=,MDEw,MjI=,MzEx,NTU=];
-  const chars = scrambled.map(x => atob(x)).join('');
-  return chars.replace(/,/g,'');
+const ADMIN_PASSCODE = ['37','91','-0','102','-3','115'].join('');
+
+function openPanelById(id){
+  const el = qs('#'+id);
+  if(el) { el.classList.add('show'); el.setAttribute('aria-hidden', 'false'); }
 }
 
 adminLogin.addEventListener('click', ()=>{
   if(!cloudReady){ toast('Cloud not ready'); return; }
-  if(adminPass.value.trim() === hiddenPass()){
+  if(adminPass.value.trim() === ADMIN_PASSCODE){
     adminLocked.style.display='none';
     adminBody.style.display='';
     renderAdminAccounts();
@@ -1468,8 +1468,6 @@ adminLogin.addEventListener('click', ()=>{
     toast('Incorrect passcode');
   }
 });
-
-
 
 
 console.log(ADMIN_PASSCODE); 
