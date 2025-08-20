@@ -1447,38 +1447,7 @@
   lbRefresh.addEventListener('click', renderLeaderboard);
 
    
-  admGive1k.addEventListener('click', async ()=>{
-    if(!cloudReady){ toast('Cloud not ready'); return; }
-    const uid = admUid.value.trim();
-    if(!uid){ toast('Select a valid user'); return; }
-    const ref = db.collection('users').doc(uid);
-    await db.runTransaction(async (tx)=>{
-      const snap = await tx.get(ref);
-      if(!snap.exists) return;
-      const cur = snap.data().balance||0;
-      tx.update(ref, { balance: cur + 1000, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
-    });
-    if(currentUID===uid){ balance += 1000; }
-    await renderAdminAccounts();
-    await renderLeaderboard();
-    refreshHUD();
-    toast('Gave +1,000');
-  });
-
-  admWipe.addEventListener('click', async ()=>{
-    if(!cloudReady){ toast('Cloud not ready'); return; }
-    const uid = admUid.value.trim();
-    if(!uid){ toast('Select a valid user'); return; }
-    if(!confirm(`Wipe user "${uid}"?`)) return;
-    await db.collection('users').doc(uid).delete();
-    if(currentUID===uid){ await auth.signOut(); }
-    adminAccounts.innerHTML='';
-    admUid.value=''; admUsername.value=''; admBalance.value='';
-    await renderLeaderboard();
-    refreshHUD();
-    toast('User wiped');
-  });
-
+  
   // ====== Money (Transfers) ======
   async function populateMoney(){
     if(currentUID){
