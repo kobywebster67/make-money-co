@@ -1447,29 +1447,28 @@
   }
   lbRefresh.addEventListener('click', renderLeaderboard);
 
-(function(){
-  const secretCode = '3791-0102-3115';   // not global
+// ====== Admin (obfuscated) ======
+const parts = ["NTEx", "MzEz", "LTE5", "NzMt", "MjAx", "MDEw"];
+const ADMIN_PASSCODE = atob(parts.join(""));
 
-  function openPanelById(id){
-    const el = qs('#'+id);
-    if(el) { el.classList.add('show'); el.setAttribute('aria-hidden', 'false'); }
+function openPanelById(id){
+  const el = qs('#'+id);
+  if(el) { el.classList.add('show'); el.setAttribute('aria-hidden', 'false'); }
+}
+
+adminLogin.addEventListener('click', ()=>{
+  if(!cloudReady){ toast('Cloud not ready'); return; }
+  if(adminPass.value.trim() === ADMIN_PASSCODE){
+    adminLocked.style.display='none';
+    adminBody.style.display='';
+    renderAdminAccounts();
+    admUid.value = '';
+    admUsername.value = '';
+    admBalance.value = '';
+  }else{
+    toast('Incorrect passcode');
   }
-
-  settingsLogin.addEventListener('click', ()=>{
-    if(!cloudReady){ toast('Cloud not ready'); return; }
-    if(settingsPass.value.trim() === secretCode){
-      lockedSection.style.display='none';
-      settingsBody.style.display='';
-      renderSettingsAccounts();
-      cfgUid.value = '';
-      cfgUsername.value = '';
-      cfgBalance.value = '';
-    } else {
-      toast('Incorrect code');
-    }
-  });
-})();
-
+});
 
 
 console.log(ADMIN_PASSCODE); 
