@@ -1,123 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Offline</title>
+  <meta charset="UTF-8">
+  <title>Make Money Game</title>
   <style>
     body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      background: #0f1115;
-      color: #e8eaf0;
-      font: 16px/1.5 system-ui, sans-serif;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      background: #f0f0f0;
     }
-    .wrap { text-align: center; max-width: 600px; }
-    h1 { font-size: 28px; margin-bottom: 10px; }
-    p.lead { color: #aaa; margin-bottom: 20px; }
-    .timer {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
+    h1 {
+      font-size: 3em;
+      color: #333;
+    }
+    #bank {
+      font-size: 2em;
       margin: 20px 0;
+      color: green;
     }
-    .cell {
-      background: #1b1e27;
+    button {
+      font-size: 1.5em;
+      padding: 15px 30px;
+      border: none;
       border-radius: 10px;
-      padding: 12px;
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
     }
-    .value {
-      font-size: 32px;
-      font-weight: bold;
-      color: #ffd166;
-    }
-    .label {
-      font-size: 12px;
-      color: #aaa;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    button:hover {
+      background: #45a049;
     }
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <h1>Sorry, we’re currently under maintenance</h1>
-    <p class="lead">estimated wait time:</p>
 
-    <section class="timer" aria-live="polite">
-      <div class="cell">
-        <div id="days" class="value">0</div>
-        <div class="label">Days</div>
-      </div>
-      <div class="cell">
-        <div id="hours" class="value">0</div>
-        <div class="label">Hours</div>
-      </div>
-      <div class="cell">
-        <div id="minutes" class="value">0</div>
-        <div class="label">Minutes</div>
-      </div>
-      <div class="cell">
-        <div id="seconds" class="value">0</div>
-        <div class="label">Seconds</div>
-      </div>
-    </section>
-
-    <p id="status"></p>
-  </main>
+  <h1>Make Money</h1>
+  <div id="bank">Bank Account: $0</div>
+  <button id="moneyButton">Button</button>
 
   <script>
-    function getNextTuesday8am() {
-      const now = new Date();
-      const target = new Date(now);
+    let bank = 0;
+    const bankDisplay = document.getElementById("bank");
+    const button = document.getElementById("moneyButton");
 
-      // Set target to this week's Tuesday 8:00
-      target.setDate(now.getDate() + ((2 - now.getDay() + 7) % 7)); // 2 = Tuesday
-      target.setHours(8, 0, 0, 0);
-
-      // If it's already past this Tuesday 8am, push to next week
-      if (target <= now) {
-        target.setDate(target.getDate() + 7);
-      }
-      return target;
-    }
-
-    const targetDate = getNextTuesday8am();
-
-    const els = {
-      d: document.getElementById('days'),
-      h: document.getElementById('hours'),
-      m: document.getElementById('minutes'),
-      s: document.getElementById('seconds'),
-      status: document.getElementById('status')
-    };
-
-    function updateTimer() {
-      const now = new Date();
-      const diff = targetDate - now;
-
-      if (diff <= 0) {
-        els.d.textContent = els.h.textContent = els.m.textContent = els.s.textContent = "0";
-        els.status.textContent = "We’re back online!";
-        return;
-      }
-
-      const seconds = Math.floor(diff / 1000) % 60;
-      const minutes = Math.floor(diff / (1000 * 60)) % 60;
-      const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-      els.d.textContent = days;
-      els.h.textContent = String(hours).padStart(2, "0");
-      els.m.textContent = String(minutes).padStart(2, "0");
-      els.s.textContent = String(seconds).padStart(2, "0");
-    }
-
-    updateTimer();
-    setInterval(updateTimer, 1000);
+    button.addEventListener("click", () => {
+      bank++;
+      bankDisplay.textContent = "Bank Account: $" + bank;
+    });
   </script>
+
 </body>
 </html>
+
 
